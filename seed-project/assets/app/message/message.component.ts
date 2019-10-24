@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MessageService } from './message.service';
 
 @Component({
     selector: 'app-message',
@@ -8,10 +9,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
             <h4 class="card-title">
                 {{messageData.username}}
                 <span class="float-right">
-                    <a class="mr-3" href="#" title="Edit list" (click)="onEdit()">
+                    <a class="mr-3" href="javascript:void(0)" title="Edit list" (click)="onEdit()">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
-                    <a href="#" title="Delete list" (click)="onDelete()">
+                    <a href="javascript:void(0)" title="Delete list" (click)="onDelete()">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </a>
                 </span>
@@ -24,16 +25,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     `
 })
 export class AppMessageComponent implements OnInit {
-    constructor() { }
+    constructor(
+        private _messageService: MessageService
+    ) { }
     @Input('message') messageData: any;
     ngOnInit(): void {}
-    @Output() editClicked = new EventEmitter<string>();
-    @Output() deleteClicked = new EventEmitter<string>();
 
     onEdit() {
-        this.editClicked.emit(this.messageData.username);
+        this._messageService.updateMessage(this.messageData);
     }
     onDelete() {
-        this.deleteClicked.emit(this.messageData.username);
+        this._messageService.deleteMessage(this.messageData);
     }
 }

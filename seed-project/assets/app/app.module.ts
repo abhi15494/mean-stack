@@ -4,22 +4,26 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from './app-routing.module';
-import { AppMessageComponent } from './message/message.component';
-import { MessageInputComponent } from './message/message-input.component';
-import { MessageListComponent } from './message/message-list.component';
+import { HeaderComponent } from './generic/header.component';
+
+import { MessageFeatureModule } from './message/message.module';
+import { AuthenticationFeatureModule } from './auth/authentication.module';
+import { PageNotFoundComponent } from './generic/pagenotfound.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        AppMessageComponent,
-        MessageInputComponent,
-        MessageListComponent
+        HeaderComponent,
+        PageNotFoundComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MessageFeatureModule,
+        AuthenticationFeatureModule
     ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

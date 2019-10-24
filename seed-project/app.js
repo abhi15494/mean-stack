@@ -8,13 +8,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 
-const appRoutes = require('./routes/app');
-const apiRoutes = require('./routes/api');
+const appApiRoutes = require('./routes/app.api');
+const messageApiRoutes = require('./routes/message.api');
 
 const mongoose = require('mongoose');
-const db_name = 'mean_db';
-mongoose.connect('mongodb://localhost:27017/'+db_name
-, { useNewUrlParser: true });
+const config = require('./config/config.constants');
+
+mongoose.connect(config.database.db_path + config.database.db_name, { useNewUrlParser: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +26,7 @@ app.use(logger('dev'));
 
 // To handle post request body
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // To set and get cookies in browser
 app.use(cookieParser());
@@ -42,8 +42,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/', appRoutes);
-app.use('/api', apiRoutes);
+app.use('/', appApiRoutes);
+app.use('/message', messageApiRoutes);
 
 // catch 404 and forward to error handler
 // Error handling middleware
